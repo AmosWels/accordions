@@ -1,21 +1,24 @@
 const api = {
   key: "97b6bf91e187c1f39acebdf088622bbd",
-  base: "https://api.openweathermap.org/data/2.5/"
+  base: "pro.openweathermap.org/data/2.5/forecast/hourly"
 }
 
 const searchbox = document.querySelector('.search-box');
 searchbox.addEventListener('keypress', setQuery);
 
 function setQuery(evt) {
-  if (evt.keyCode == 14) {
+  if (evt.keyCode === 13 || 14) {
     getResults(searchbox.value);
-    console.log(searchbox.value)
+    console.log('dfd', searchbox.value)
   }
 }
 
 function getResults (query) {
-  fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
+  // pro.openweathermap.org/data/2.5/forecast/hourly?q={city name}&appid={your api key}
+  // fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
+  fetch(`${api.base}?q=${query}&APPID=${api.key}`)
     .then(weather => {
+      console.log('dfd', weather.json())
       return weather.json();
     }).then(displayResults);
 }
